@@ -30,4 +30,12 @@ $routes->post('course/enroll', 'Course::enroll');
 $routes->get('student/courses', 'Student::myCourses');
 $routes->get('student/assignments', 'Student::assignments');
 
-// Admin pages (protected) - routes for announcements CRUD will be added next
+// Admin pages (protected)
+$routes->group('admin', ['filter' => 'roleauth'], static function ($routes) {
+    $routes->get('announcements', 'AdminController::announcements');
+    $routes->get('announcements/create', 'AdminController::createAnnouncement');
+    $routes->post('announcements/create', 'AdminController::createAnnouncement');
+    $routes->get('announcements/edit/(:num)', 'AdminController::editAnnouncement/$1');
+    $routes->post('announcements/edit/(:num)', 'AdminController::editAnnouncement/$1');
+    $routes->post('announcements/delete/(:num)', 'AdminController::deleteAnnouncement/$1');
+});
