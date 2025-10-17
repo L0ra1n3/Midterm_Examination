@@ -6,26 +6,38 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
     
+// Public pages
 $routes->get('/', 'Home::index');   
 $routes->get('/about', 'Home::about');  
 $routes->get('/contact', 'Home::contact');
+$routes->get('/announcements', 'Announcement::index');
 
 // Auth routes
 $routes->get('login', 'Auth::login');
-$routes->post('login', 'Auth::login');  // ✅ fixed
+$routes->post('login', 'Auth::login');
 $routes->get('register', 'Auth::register');
-$routes->post('register', 'Auth::register');  // ✅ fixed
+$routes->post('register', 'Auth::register');
+$routes->get('auth/logout', 'Auth::logout');
 $routes->get('logout', 'Auth::logout');
 
-// Unified dashboard (role-based redirect handled in controller)
-$routes->get('dashboard', 'Auth::dashboard');
+// Dashboard
+$routes->get('dashboard', 'Auth::dashboard'); // unified dashboard route
 
-// Role-specific dashboards
-$routes->get('admin/dashboard', 'AdminController::index');
-$routes->get('user/dashboard', 'UserController::index');
-$routes->get('student/dashboard', 'StudentController::dashboard');
-$routes->get('teacher/dashboard', 'InstructorController::dashboard');
-$routes->get('staff/dashboard', 'StaffController::dashboard'); // ✅ added missing staff route
+// Course enrollment (AJAX)
+$routes->post('course/enroll', 'Course::enroll');
 
-$routes->get('announcements', 'Announcement::index');
+// Student pages
+$routes->get('student/courses', 'Student::myCourses');
+$routes->get('student/assignments', 'Student::assignments');
 
+// Teacher pages (protected)
+$routes->group('teacher', ['filter' => 'roleauth'], static function ($routes) {
+    $routes->get('classes', 'Teacher::classes');
+    $routes->get('grades', 'Teacher::grades');
+});
+
+// Admin pages (protected)
+$routes->group('admin', ['filter' => 'roleauth'], static function ($routes) {
+    $routes->get('users', 'Admin::users');
+    $routes->get('reports', 'Admin::reports');
+});
