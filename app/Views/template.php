@@ -73,7 +73,7 @@
 
       <!-- Right side -->
       <ul class="navbar-nav ms-auto">
-        <?php if (session()->get('isLoggedIn')): ?>
+        <?php if (session()->get('logged_in')): ?>
           <!-- ✅ Show when logged in -->
           <li class="nav-item">
             <a class="nav-link <?= url_is('dashboard') ? 'active' : '' ?>" href="<?= base_url('dashboard') ?>">Dashboard</a>

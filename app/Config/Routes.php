@@ -30,14 +30,4 @@ $routes->post('course/enroll', 'Course::enroll');
 $routes->get('student/courses', 'Student::myCourses');
 $routes->get('student/assignments', 'Student::assignments');
 
-// Teacher pages (protected)
-$routes->group('teacher', ['filter' => 'roleauth'], static function ($routes) {
-    $routes->get('classes', 'Teacher::classes');
-    $routes->get('grades', 'Teacher::grades');
-});
-
-// Admin pages (protected)
-$routes->group('admin', ['filter' => 'roleauth'], static function ($routes) {
-    $routes->get('users', 'Admin::users');
-    $routes->get('reports', 'Admin::reports');
-});
+// Admin pages (protected) - routes for announcements CRUD will be added next
