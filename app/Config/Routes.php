@@ -26,3 +26,6 @@ $routes->get('user/dashboard', 'UserController::index');
 $routes->get('student/dashboard', 'StudentController::dashboard');
 $routes->get('teacher/dashboard', 'InstructorController::dashboard');
 $routes->get('staff/dashboard', 'StaffController::dashboard'); // ✅ added missing staff route
+
+$routes->get('announcements', 'Announcement::index');
+
